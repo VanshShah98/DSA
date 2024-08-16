@@ -1,0 +1,23 @@
+what are algos? It is the final set of information.used to solve problems ; Sequence of operations is used to carry out inorder to solve a specific problem.
+Charactristics of algorithms:
+1)input
+2)output
+3)definedness
+4)finiteness
+5)effectiveness 
+Q1)write an algorithms for adding 2 number.
+Q2)finding the largest of the three number.
+
+Time complexity and space
+Time taken to execute each statement of the code in an algorithm
+2 methods to measure:
+a) step count/frequency count method: analysing the time complexity; number of times you're checking how many number of times an instruction is getting executed.
+-for loop: 1
+-if statement: 1
+-parenthesis: 0
+-while statement: 0
+-break/continue/ go to: 1
+-switch statement: 1
+Example:- Algo for the Sum of elements of array 
+
+b) operational count: analysing efficiency of the algo thru counting the no. of basic operations

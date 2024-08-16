@@ -1,0 +1,791 @@
+Expression Tree.
+This Tree is also called as Brinary Tree.
+1.) Read one Symbol at a time.
+2.) If the symbol is an operand, then insert it in tree and go to next node of expression.
+3.) Else if the symbol is ‘(‘ ,then push this into stack .
+4.) And for ‘)’ pop from stack until you get ‘(‘. Then make null and set root as current node.
+5.) Repeat step 2 & 3 till all symbols are read.
+6.) At last only root will be left which can be used to print postorder traversal.
+
+If the symbol is an operator.
+a.) Pop two nodes from Stack (if they exist).
+b.) Create new Node with value = Operator + operands.
+c.) Push this back on top of stack.
+d.) Go to Step-7
+Step -8: Print PostOrder Traversal
+
+
+
+if symbol is an operand
+Create two pointer form the stack namely T1 and T2.
+form a new tree with root as the operator.
+and T1 as left child and T2 as right child.
+
+
+
+
+
+
+
+// C++ program to insert element in Binary Tree
+#include <iostream>
+#include <queue>
+using namespace std;
+
+/* A binary tree node has data, pointer to left child
+and a pointer to right child */
+
+struct Node {
+	int data;
+	Node* left;
+	Node* right;
+};
+
+// Function to create a new node
+Node* CreateNode(int data)
+{
+	Node* newNode = new Node();
+	if (!newNode) {
+		cout << "Memory error\n";
+		return NULL;
+	}
+	newNode->data = data;
+	newNode->left = newNode->right = NULL;
+	return newNode;
+}
+
+// Function to insert element in binary tree
+Node* InsertNode(Node* root, int data)
+{
+	// If the tree is empty, assign new node address to root
+	if (root == NULL) {
+		root = CreateNode(data);
+		return root;
+	}
+
+	// Else, do level order traversal until we find an empty
+	// place, i.e. either left child or right child of some
+	// node is pointing to NULL.
+	queue<Node*> q;
+	q.push(root);
+
+	while (!q.empty()) {
+		Node* temp = q.front();
+		q.pop();
+
+		if (temp->left != NULL)
+			q.push(temp->left);
+		else {
+			temp->left = CreateNode(data);
+			return root;
+		}
+
+		if (temp->right != NULL)
+			q.push(temp->right);
+		else {
+			temp->right = CreateNode(data);
+			return root;
+		}
+	}
+}
+
+/* Inorder traversal of a binary tree */
+Root Left Right.
+void inorder(Node* temp)
+{
+	if (temp == NULL)
+		return;
+
+	inorder(temp->left);
+	cout << temp->data << ' ';
+	inorder(temp->right);
+}
+
+// Driver code
+int main()
+{
+	Node* root = CreateNode(10);
+	root->left = CreateNode(11);
+	root->left->left = CreateNode(7);
+	root->right = CreateNode(9);
+	root->right->left = CreateNode(15);
+	root->right->right = CreateNode(8);
+
+	cout << "Inorder traversal before insertion: ";
+	inorder(root);
+	cout << endl;
+
+	int key = 12;
+	root = InsertNode(root, key);
+
+	cout << "Inorder traversal after insertion: ";
+	inorder(root);
+	cout << endl;
+
+	return 0;
+}
+
+
+
+
+//Traversal.
+
+Their 3 types of Traversal.
+1st inorder Traversal.
+2nd Pre order Traversal.
+3rd PostOrder Traversal.
+
+General Inorder Taversal.
+// C++ program for different tree traversals
+#include <bits/stdc++.h>
+using namespace std;
+
+// A binary tree node has data, pointer to left child
+// and a pointer to right child
+struct Node {
+	int data;
+	struct Node *left, *right;
+};
+
+// Utility function to create a new tree node
+Node* newNode(int data)
+{
+	Node* temp = new Node;
+	temp->data = data;
+	temp->left = temp->right = NULL;
+	return temp;
+}
+
+// Given a binary tree, print its nodes in inorder
+void printInorder(struct Node* node)
+{
+	if (node == NULL)
+		return;
+
+	// First recur on left child
+	printInorder(node->left);
+
+	// Then print the data of node
+	cout << node->data << " ";
+
+	// Now recur on right child
+	printInorder(node->right);
+}
+
+// Driver code
+int main()
+{
+	struct Node* root = newNode(1);
+	root->left = newNode(2);
+	root->right = newNode(3);
+	root->left->left = newNode(4);
+	root->left->right = newNode(5);
+
+	// Function call
+	cout << "Inorder traversal of binary tree is \n";
+	printInorder(root);
+
+	return 0;
+}
+
+
+//Pre Order.
+
+Left Right RootNode.
+#include <iostream>
+#include <vector>
+#include <stack>
+void preOrderTraversal(std::vector<std::vector<char>>& grid, std::stack<std::pair<int, int>>& s, int row, int col) {
+    if (row < 0 || row >= grid.size() || col < 0 || col >= grid[0].size() || grid[row][col] == '0') {
+        return;
+    }
+
+    grid[row][col] = '0';
+    s.push({row, col});
+
+    if (row > 0) {
+        preOrderTraversal(grid, s, row - 1, col);
+    }
+
+    if (col > 0) {
+        preOrderTraversal(grid, s, row, col - 1);
+    }
+
+    if (row < grid.size() - 1) {
+        preOrderTraversal(grid, s, row + 1, col);
+    }
+
+    if (col < grid[0].size() - 1) {
+        preOrderTraversal(grid, s, row, col + 1);
+    }
+}
+std::vector<std::vector<int>> findIslands(std::vector<std::vector<char>>& grid) {
+    std::vector<std::vector<int>> result;
+    std::stack<std::pair<int, int>> s;
+
+    for (int i = 0; i < grid.size(); i++) {
+        for (int j = 0; j < grid[0].size(); j++) {
+            if (grid[i][j] == '1') {
+                preOrderTraversal(grid, s, i, j);
+                std::vector<int> island;
+                while (!s.empty()) {
+                    island.push_back(s.top().first);
+                    island.push_back(s.top().second);
+                    s.pop();
+                }
+                result.push_back()
+            }
+        }
+    }
+}
+
+
+Binary Seacrh Tree is 
+left sub tree is small to root
+and right tree is greater then the root node.
+ Insertion .
+ Algorithm.
+ S-1:to insert the element x into the tree.
+ S-2: Check wether the root node T.if the value is less then root node travers to the left xub tree recursively until it reaches the T->Left.
+ S-3:T->left=NULL;
+ S-4: Then X is placed in the T of Left.
+ S-5: If X is greater then the root traverse to the right sub tree recurssively untill it reaches to the T->Right =null,then x is placed in T->right.
+
+ DELETION.
+ Case-1:
+ S-1:To deleting the Element.
+ S-2:If Node with key as X exists.
+ S-3:Then delete it and return true else false.
+ Case-2:
+ Node with one children.
+ S-5:if left child exist then replace the value of parent by its left child otherwise replace the value of parent by its right child.
+ If the node has only left child.
+ Replace that node by its left child.
+ If the node has only right child.
+ Replace that node by its Right Child.
+															7
+														/		\
+														4			10
+													/		\
+												3				5
+																	\
+																		6
+
+
+
+
+ Case-3 :
+ Node having two Children.
+ Find Inorder successor or Predecessor which will be replaced by current node.
+ Delete Successor/Predecessor from Binary Search Tree.
+ Copy value of deleted node to this node.
+ Return True.
+
+it is difficult to delete a node which has 2 childern so the general way it to replace the data of the node to the smallest node of the sub tree and recursively deleting the data.
+
+
+
+
+
+															10
+														/		\
+														5			15
+													/		\
+												3				8
+															/
+														7	
+
+
+
+
+														15
+													/		\
+												10			30
+												/
+												5				\
+																35
+															/
+														25
+															\
+																32
+
+S-1 check whether the root is null if so return null.
+S-2 Otherwise check the value with the node value.
+S-2.1:if x = T->data. Return T.
+S-2.2:if x>T->data Taversa ti the left of t Recursively.
+S-2.3:If x<t->data then traverse right recursively.
+
+
+
+AVL binary Search Tree.
+Find the balance factor here,
+If the Tree is empty then the balance factor is 0.
+THe avl Tree differ from the valu +-1,0.
+ to find balance factor take the long path.
+First Case:
+An insertion into the left sub tree of the left child of th node.
+Case 2:
+An insertion into the right sub tree into the right child of the node.
+Case 3:
+An insertion into the right side of the left side of the tree.
+Case 4:
+An insertion in a right subtree on the left child of the tree.
+
+
+
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+void tweakNumbers(int T, int numbers[]) {
+    for (int i = 0; i < T; i++) {
+        int N = numbers[i];
+        string N_str = to_string(N);
+        int smallest = N;
+        int largest = N;
+
+        for (int i = 1; i < N_str.length(); i++) {
+            for (int j = i; j < N_str.length(); j++) {
+                if (i == j) continue;
+
+                // Swap digits at positions i and j
+                swap(N_str[i], N_str[j]);
+                int newNum = stoi(N_str);
+
+                if (newNum < smallest) smallest = newNum;
+                if (newNum > largest) largest = newNum;
+
+                // Revert the swap to explore other possibilities
+                swap(N_str[i], N_str[j]);
+            }
+        }
+
+        cout << smallest << endl;
+        cout << largest << endl;
+    }
+}
+
+int main() {
+    int T;
+    cin >> T;
+    int numbers[T];
+
+    for (int i = 0; i < T; i++) {
+        cin >> numbers[i];
+    }
+
+    tweakNumbers(T, numbers);
+
+    return 0;
+}
+
+//how to insert in avl tree?
+//give me the code in java?
+
+public class AVLTree {
+
+    private Node root;
+
+    public void insert(int value) {
+        root = insert(root, value);
+    }
+
+    private Node insert(Node node, int value) {
+        if (node == null) {
+            return new Node(value);
+        }
+
+        if (value < node.value) {
+            node.left = insert(node.left, value);
+        } else {
+            node.right = insert(node.right, value);
+        }
+
+        node.height = Math.max(height(node.left), height(node.right)) + 1;
+
+        int balanceFactor = getBalanceFactor(node);
+
+        if (balanceFactor > 1) {
+            if (height(node.left.left) >= height(node.left.right)) {
+                node = rotateRight(node);
+            } else {
+                node = rotateLeftThenRight(node);
+            }
+        } else if (balanceFactor < -1) {
+            if (height(node.right.right) >= height(node.right.left)) {
+                node = rotateLeft(node);
+            } else {
+                node = rotateRightThenLeft(node);
+            }
+        }
+
+        return node;
+    }
+
+    private Node rotateRight(Node node) {
+        Node leftChild = node.left;
+        node.left = leftChild.right;
+        leftChild.right = node;
+
+        node.height = Math.max(height(node.left), height(node.right)) + 1;
+        leftChild.height = Math.max(height(leftChild.left), height(leftChild.right)) + 1;
+
+        return leftChild;
+    }
+
+    private Node rotateLeft(Node node) {
+        Node rightChild = node.right;
+        node.right = rightChild.left;
+        rightChild.left = node;
+
+        node.height = Math.max(height(node.left), height(node.right)) + 1;
+        rightChild.height = Math.max(height(rightChild.left), height(rightChild.right)) + 1;
+
+        return rightChild;
+    }
+
+    private Node rotateLeftThenRight(Node node)
+
+
+
+
+
+//construct an avl tree by inserting numbers from 1 to 8?
+//algorithm?
+//also figure?
+//show me the figure?
+//show me diagram of this avl tree?
+//use number from 1 to 8?
+//give me a diagram of avl tree having numbers from 1 to 8?
+
+
+
+		4
+       / \
+      2   6
+     / \ / \
+    1  3 5  7
+         	\
+          	 8
+
+
+//give me step wise explaination?
+
+
+
+
+//Hashing?
+1. Start by creating an empty hash table.
+
+2. To insert a key-value pair into the hash table, use the hash function to compute the index where the key-value pair should be stored.
+
+3. If the index is already occupied, handle the collision by using a suitable collision resolution strategy, such as chaining or open addressing.
+
+4. To retrieve the value associated with a key, use the hash function to compute the index where the key-value pair should be stored.
+
+5. If the index is occupied, use the collision resolution strategy to find the key-value pair.
+
+6. To delete a key-value pair from the hash table, use the hash function to compute the index where the key-value pair should be stored.
+
+7. If the index is occupied, use the collision resolution strategy to find the key-value pair.
+
+8. After finding the key-value pair, remove it from the hash table.
+
+9. To iterate over the key-value pairs in the hash table, use a loop to iterate over each index in the hash table.
+
+10. For each index, use the collision resolution strategy to find all key-value pairs stored at that index.
+
+11. Return each key-value pair in the order they are found.
+
+Please note that the specific implementation details, such as the choice of hash function and collision resolution strategy, may vary depending on the requirements of the application. Additionally, the performance of a hash table can be influenced by factors such as the load factor, the quality of the hash function, and the efficiency of the collision resolution strategy.
+
+
+//construct an avl tree for the following data:?
+21,26,30,9,4,14,28,18,15,10,2,3,7
+
+
+
+2
+/ \
+3 4
+/ \ / \
+7 9 14 15
+/ \ / \ / \
+10 18 21
+
+
+Array inplementation of binary tree.
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+class Node {
+public:
+  int data;
+  Node* left;
+  Node* right;
+
+  Node(int data) {
+    this->data = data;
+    this->left = nullptr;
+    this->right = nullptr;
+  }
+};
+
+class BinaryTree {
+public:
+  Node* root;
+
+  BinaryTree() {
+    this->root = nullptr;
+  }
+
+  void insert(int data) {
+    Node* new_node = new Node(data);
+
+    if (root == nullptr) {
+      root = new_node;
+      return;
+    }
+
+    Node* current = root;
+    while (true) {
+      if (data < current->data) {
+        if (current->left == nullptr) {
+          current->left = new_node;
+          return;
+        } else {
+          current = current->left;
+        }
+      } else {
+        if (current->right == nullptr) {
+          current->right = new_node;
+          return;
+        } else {
+          current = current->right;
+        }
+      }
+    }
+  }
+}
+
+
+
+B tree?
+1. Introduction
+
+A B-tree is a self-balancing search tree, in which each node contains multiple keys and has multiple children. Each key separates its children into two distinct sub-trees.
+
+2. Structure
+
+A B-tree of order m satisfies the following properties:
+
+- Every node contains at most m children.
+- Every node (except the root) contains at least m/2 children.
+- The root contains at least two children if it is not a leaf node.
+- A non-leaf node with k children contains k-1 keys.
+- All leaves appear at the same level and carry no information.
+
+3. Operations
+
+- Search: Searches for a key in the B-tree.
+- Insertion: Inserts a new key into the B-tree.
+- Deletion: Deletes a key from the B-tree.
+
+
+4.Implemetation.
+c++
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+class Node {
+public:
+ int keys[100];
+ Node* children[100];
+ int n;
+ bool leaf;
+
+ Node(int n, bool leaf) {
+    this->n = n;
+    this->leaf = leaf;
+ }
+};
+
+class BTree {
+public:
+ Node* root;
+ int t;
+
+ BTree(int t) {
+    this->t = t;
+    root = nullptr;
+ }
+
+ // Implement search, insertion, and deletion operations here.
+};
+
+5. Conclusion
+
+B-trees are widely used in databases and file systems due to their efficient search, insertion, and deletion operations. They maintain good balance by splitting nodes when they become full and merging nodes when they become too empty. This ensures that the tree's height remains small, resulting in efficient operations.
+
+
+
+
+//Give me a figure of B tree for 1,12,8,2,25,6,14,28,17,7,52,16,48,68?
+order=5 
+m=5;
+The following is a figure of a B-tree of order 5 for the keys 1, 12, 8, 2, 25, 6, 14, 28, 17, 7, 52, 16, 48, and 68:
+
+```
+          8
+         /   \
+        2   12
+       / \   / \
+      1   6  7  14
+     / \ / \ / \
+    3  5  16 17 25 28
+   / \ / \ / \
+  68 48 45 52 53 55
+```
+
+The root node of the tree contains the keys 2, 8, and 12. The left child of the root node contains the keys 1 and 6, and the right child of the root node contains the keys 7 and 14. The leaf nodes of the tree contain the keys 1, 3, 5, 6, 7, 16, 17, 25, 28, 45, 48, 52, 53, and 55.
+
+To search for a key in the B-tree, we start at the root node and compare the key to the keys in the root node. If the key is less than or equal to the smallest key in the root node, we follow the left pointer from the root node. Otherwise, we follow the right pointer from the root node. We continue this process until we reach a leaf node. If the key is in the leaf node, we have found it. Otherwise, the key is not in the tree.
+
+To insert a new key into the B-tree, we start at the root node and follow the same process as for searching for a key. When we reach a leaf node, we insert the new key into the leaf node in sorted order. If the leaf node is full, we split the leaf node into two leaf nodes and redistribute the keys between the two leaf nodes. We may also need to split the parent of the leaf node, and so on, until we reach the root node.
+
+To delete a key from the B-tree, we start at the root node and follow the same process as for searching for a key. When we reach the leaf node that contains the key to be deleted, we delete the key from the leaf node. If the leaf node has too few keys after the deletion, we may need to merge the leaf node with a neighboring leaf node. We may also need to merge the parent of the leaf node with a neighboring node, and so on, until we reach the root node.
+
+//Binary Heap?
+A binary heap is a data structure that stores data in a tree-like structure, where each node has a value and two child nodes. The value of a node is always greater than or equal to the values of its child nodes. This property is called the heap property. Binary heaps are often used to implement priority queues, where the highest-priority element is always at the root of the tree.
+
+To insert an element into a binary heap, the element is first added to the bottom of the tree. The element is then compared to its parent node. If the element is greater than its parent node, the two elements are swapped. This process is repeated until the element reaches its proper position in the tree.
+
+To delete an element from a binary heap, the element at the root of the tree is removed. The last element in the tree is then moved to the root. The new root element is then compared to its child nodes. If the new root element is less than either of its child nodes, the two elements are swapped. This process is repeated until the new root element reaches its proper position in the tree.
+
+Binary heaps are an efficient way to implement priority queues. The time complexity of inserting an element into a binary heap is O(log n), where n is the number of elements in the heap. The time complexity of deleting an element from a binary heap is also O(log n).
+
+
+
+
+
+//Topalgical grph alogorithm?
+s-1:find indegree of every vertex.
+s-2:place the vertex whoes indegree os zero on in the empty queue
+s-3 dequeue the vertex and decriment the indegree of all its adujecent vertex.
+s-4 enqueue the vertex in the queue and if the indegree falls to 0.
+s-5 repeat from step 3 till the queue is empty.
+s-6 finally topological order is the oreder in which the vertex dequeue.
+
+
+
+1.Start with a directed acyclic graph (DAG).
+2.Find a node with no incoming edges (in-degree of 0).
+3.Remove this node and its outgoing edges from the graph.
+4.Add the removed node to the topological order.
+5.Repeat steps 2-4 until all nodes are included in the topological order.
+
+
+
+Topological sorting is a technique used to order the vertices of a directed acyclic graph (DAG) in a way that preserves the order of the edges in the graph. This means that if there is an edge from vertex A to vertex B in the graph, then vertex A will appear before vertex B in the topological order.
+
+There are several different algorithms that can be used to perform topological sorting. One common algorithm is the Kahn's algorithm, which works as follows:
+
+1. Start with a directed acyclic graph (DAG).
+2. Find a node with no incoming edges (in-degree of 0).
+3. Remove this node and its outgoing edges from the graph.
+4. Add the removed node to the topological order.
+5. Repeat steps 2-4 until all nodes are included in the topological order.
+
+Another common algorithm for topological sorting is the DFS (depth-first search) algorithm. The DFS algorithm works by recursively traversing the graph, starting from a node with no incoming edges. As the algorithm traverses the graph, it adds the nodes to the topological order in the order in which they are visited.
+
+Both the Kahn's algorithm and the DFS algorithm have a time complexity of O(|V| + |E|), where |V| is the number of vertices in the graph and |E| is the number of edges in the graph.
+
+
+
+
+//adujecentcy matrix?
+
+Given a directed acyclic graph (DAG), topological sorting is a technique for ordering the vertices of the graph in a way that preserves the order of the edges in the graph. This means that if there is an edge from vertex A to vertex B in the graph, then vertex A will appear before vertex B in the topological order.
+
+There are several different algorithms that can be used to perform topological sorting. One common algorithm is the Kahn's algorithm, which works as follows:
+
+1. Start with a directed acyclic graph (DAG).
+2. Find a node with no incoming edges (in-degree of 0).
+3. Remove this node and its outgoing edges from the graph.
+4. Add the removed node to the topological order.
+5. Repeat steps 2-4 until all nodes are included in the topological order.
+
+Another common algorithm for topological sorting is the DFS (depth-first search) algorithm. The DFS algorithm works by recursively traversing the graph, starting from a node with no incoming edges. As the algorithm traverses the graph, it adds the nodes to the topological order in the order in which they are visited.
+
+Both the Kahn's algorithm and the DFS algorithm have a time complexity of O(|V| + |E|), where |V| is the number of vertices in the graph and |E| is the number of edges in the graph.
+
+In the context of natural language processing, topological sorting can be used to order the words in a sentence in a way that preserves the order of the words in the sentence. This can be useful for tasks such as part-of-speech tagging and dependency parsing.
+
+For example, consider the sentence "The cat sat on the mat". A topological sort of the words in this sentence would be:
+
+1. The
+2. cat
+3. sat
+4. on
+5. the
+6. mat
+
+This topological sort preserves the order of the words in the sentence, and it can be used to help identify the parts of speech of the words in the sentence.
+ For example, the word "the" is a determiner, the word "cat" is a noun, the word "sat" is a verb, the word "on" is a preposition, and the word "mat" is a noun.
+
+
+//graph traversal?
+visting each node one time.
+//DFS vs BFS?
+
+//Minimum spamning tree?
+A minimum spanning tree (MST) is a fundamental concept in graph theory and network design.
+It is a subset of the edges of an undirected graph that connects all the vertices while minimizing the total edge weight. 
+In other words, it's a tree (a connected graph with no cycles) that includes all the vertices and has the smallest possible sum of edge weights.
+
+
+Shortest path algorithm.
+
+
+Shortest path algorithms are a fundamental concept in graph theory and are used to find the shortest path between two vertices in a graph. 
+There are several algorithms to achieve this, and the choice of algorithm often depends on the specific characteristics of the graph and the problem at hand. Two of the most well-known shortest path algorithms are Dijkstra's algorithm and the Bellman-Ford algorithm.
+
+1. **Dijkstra's Algorithm:**
+   - Dijkstra's algorithm is used to find the shortest path from a single source vertex to all other vertices in a non-negative weighted graph.
+   - It maintains a set of vertices with known minimum distance from the source and a set of vertices with unknown distance.
+   - It repeatedly selects the vertex with the smallest known distance, explores its neighbors, and updates their distances if a shorter path is found.
+   - Dijkstra's algorithm works optimally for non-negative edge weights and is generally more efficient than the Bellman-Ford algorithm when applied to graphs with such characteristics.
+
+2. **Bellman-Ford Algorithm:**
+   - The Bellman-Ford algorithm is used to find the shortest path in a weighted graph, even when the graph contains negative weight edges. However, it can detect and handle negative weight cycles.
+   - It initializes the distance to all vertices as infinity, except for the source vertex, which is set to 0.
+   - It iteratively relaxes all edges V-1 times, where V is the number of vertices in the graph, to guarantee that the shortest path is found.
+   - If negative weight cycles are present, the Bellman-Ford algorithm can detect them. A negative weight cycle is a cycle where the sum of edge weights is negative, and it can disrupt the concept of a "shortest path."
+
+
+S-1 Assign the source vertex as S and NQS.
+S-2 Dequeue the vertex S from Queue and assign the value of that vertex to be node and then find its adujecentcy vertex.
+S-3 if the distance of the adujecentcy vertex = infinity. then change the distance of that vertex as the distance of its source incriment by one and enqueue the vertex
+S-4 repat from step 2 untill the queue becomes empty
+
+A->B->D
+C->D
+A->D
+     A
+    / \
+  1/   \2
+ /      \
+B        C
+ \     /
+  3\   /4
+    \ /
+     D
+
+
