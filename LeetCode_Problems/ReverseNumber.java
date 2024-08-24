@@ -8,7 +8,7 @@
  */
 public class ReverseNumber {
     public static void main(String[] args) {
-        System.out.println(reverse2(892320));
+        System.out.println(reverse3(-1357));
     }
 
     // Brute Force Approch but Fails test case when Int is overFlowed.
@@ -46,7 +46,7 @@ public class ReverseNumber {
     }
 
     // Optimized.
-    public int reverse3(int x) {
+    public static int reverse3(int x) {
         long ans = 0;
 
         while (x != 0) {
