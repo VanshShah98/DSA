@@ -14,7 +14,7 @@ public class KthDistinctString {
      */
     public static void main(String[] args) {
         String[] str = { "d", "b", "c", "b", "c", "a" };
-        String[] str2 = { "a", "b", "a" };
+        // String[] str2 = { "a", "b", "a" };
         System.out.println(kthDistinct2(str, 2));
     }
 

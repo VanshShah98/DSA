@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class plus_one {
     public static void main(String[] args) {
-        int num[] = { 8, 9, 9, 9 };
+        int num[] = { 8, 7, 1, 9 };
         num = plusOne2(num);
         for (int i : num) {
             System.out.print(i + " ");
@@ -47,7 +47,7 @@ public class plus_one {
                     return digits;
                 }
             }
-            for (int i = digits.length - 1; i >= 0; --i) {
+            for (int i = digits.length - 1; i >= 0;) {
                 if (digits[ptr] == 9) {
                     digits[i] = 0;
                     digits[digits.length - 1] = 0;
