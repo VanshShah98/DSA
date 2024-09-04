@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Return an integer denoting the number of
  * substrings of s that satisfy the k-constraint.
  */
-public class SpecificSubstring {
+public class CountSubstringsThatSatisfyKConstraint {
     public static void main(String[] args) {
         String s = "011111101101111001010000001010";
         System.out.println(countKConstraintSubstrings2(s, 7));
