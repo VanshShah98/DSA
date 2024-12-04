@@ -1,4 +1,4 @@
-package Linkedlist;
+package Linkedlist.Singly_LinkedList;
 
 public class LL {
     private Node head;

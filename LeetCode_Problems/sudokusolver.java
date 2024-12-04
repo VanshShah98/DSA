@@ -1,24 +1,25 @@
 public class sudokusolver {
     public static void main(String[] args) {
-        int[][] board = new int[][] {
-                { 5, 3, 0, 0, 7, 0, 0, 0, 0 },
-                { 6, 0, 0, 1, 9, 5, 0, 0, 0 },
-                { 0, 9, 8, 0, 0, 0, 0, 6, 0 },
-                { 8, 0, 0, 0, 6, 0, 0, 0, 3 },
-                { 4, 0, 0, 8, 0, 3, 0, 0, 1 },
-                { 7, 0, 0, 0, 2, 0, 0, 0, 6 },
-                { 0, 6, 0, 0, 0, 0, 2, 8, 0 },
-                { 0, 0, 0, 4, 1, 9, 0, 0, 5 },
-                { 0, 0, 0, 0, 8, 0, 0, 7, 9 } };
+        char[][] board = {
+                { '.', '8', '7', '6', '5', '4', '3', '2', '1' },
+                { '2', '.', '.', '.', '.', '.', '.', '.', '.' },
+                { '3', '.', '.', '.', '.', '.', '.', '.', '.' },
+                { '4', '.', '.', '.', '.', '.', '.', '.', '.' },
+                { '5', '.', '.', '.', '.', '.', '.', '.', '.' },
+                { '6', '.', '.', '.', '.', '.', '.', '.', '.' },
+                { '7', '.', '.', '.', '.', '.', '.', '.', '.' },
+                { '8', '.', '.', '.', '.', '.', '.', '.', '.' },
+                { '9', '.', '.', '.', '.', '.', '.', '.', '.' }
+        };
 
         if (solve(board)) {
-            display(board);
+            System.out.println(true);
         } else {
-            System.out.println("Cannot be solved");
+            System.out.println(false);
         }
     }
 
-    static boolean solve(int[][] board) {
+    static boolean solve(char[][] board) {
         int n = board.length;
         int row = -1;
         int col = -1;
@@ -26,7 +27,7 @@ public class sudokusolver {
         boolean EL = true;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                if (board[i][j] == 0) {
+                if (board[i][j] == '.') {
                     row = i;
                     col = j;
                     EL = false;
@@ -41,32 +42,32 @@ public class sudokusolver {
         if (EL) {
             return true;
         }
-        for (int number = 1; number <= 9; number++) {
+        for (char number = '1'; number <= '9'; number++) {
             if (isSafe(board, row, col, number)) {
                 board[row][col] = number;
                 if (solve(board)) {
                     return true;
-                } else {
-                    board[row][col] = 0;
                 }
+                board[row][col] = '.';
+
             }
 
         }
         return false;
     }
 
-    private static void display(int[][] board) {
-        for (int[] row : board) {
-            for (int num : row) {
+    private static void display(char[][] board) {
+        for (char[] row : board) {
+            for (char num : row) {
                 System.out.print(num + " ");
             }
             System.out.println();
         }
     }
 
-    static boolean isSafe(int[][] board, int row, int col, int num) {
+    static boolean isSafe(char[][] board, int row, int col, char number) {
         for (int i = 0; i < board.length; i++) {
-            if (board[row][i] == num || board[i][col] == num) {
+            if (board[row][i] == number || board[i][col] == number) {
                 return false;
             }
         }
@@ -76,7 +77,7 @@ public class sudokusolver {
         int colStart = col - col % sqrt;
         for (int r = rowStart; r < rowStart + sqrt; r++) {
             for (int c = colStart; c < colStart + sqrt; c++) {
-                if (board[r][c] == num) {
+                if (board[r][c] == number) {
                     return false;
                 }
             }
