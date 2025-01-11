@@ -1,5 +1,8 @@
 package Trees;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 public class BST {
     public class Node{
         private int value;
@@ -73,5 +76,31 @@ public class BST {
         }
         return Math.abs(getheight(node.left)-getheight(node.right))<=1 && balanced(node.left)&& balanced(node.right);
     }
+    public void populatedSorted(int[] nums){
+        populatedSorted(nums, 0, nums.length);
+    }
+    public void populatedSorted(int [] nums , int start , int end){
+        if(start>=end){
+            return;
+        }
+        int mid = (start+end)/2;
+        this.insert(nums[mid]);
+        populatedSorted(nums, start, mid);
+        populatedSorted(nums, mid+1, end);
+    }
+    public void populate(int [] nums ){
+        for(int i=0;i<nums.length;i++){
+            this.insert(nums[i]);
+        }
+    }
 
-}
+    public static void main(String[] args) {
+        BST tree = new BST();
+        int[] nums = {5,8 ,1,10,11,19,16,18,14};
+        // tree.populatedSorted(nums);
+        // tree.gooddisplay();
+        Arrays.sort(nums);
+        tree.populatedSorted(nums);
+        tree.gooddisplay();
+    }
+}   
