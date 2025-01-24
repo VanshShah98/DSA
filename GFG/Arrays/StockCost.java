@@ -1,3 +1,5 @@
+package GFG.Arrays;
+
 public class StockCost {
     public static void main(String[] args) {
         
