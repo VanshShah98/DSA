@@ -1,39 +1,42 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-public class LongestConsecutiveSeq {
+public class LongestConsecutiveSeq{
     public static void main(String[] args) {
-        int[] nums = { 0, 3, 7, 2, 5, 8, 4, 6, 0, 1 };
+        int [] nums = {0,-1};
         System.out.println(longestConsecutive(nums));
     }
-
-    // For all array from 0 to N.
+    // For all array from 0 to N
+    
     public static int longestConsecutive(int[] nums) {
-        int max = nums[0];
-        for (int i = 0; i < nums.length; i++) {
-            max = Math.max(max, nums[i]);
+        if (nums.length == 0) {
+            return 0;
         }
-        List<Boolean> ans = new ArrayList<Boolean>(Arrays.asList(new Boolean[max + 1]));
-        Collections.fill(ans, Boolean.TRUE);
-        for (int i = 0; i < nums.length; i++) {
-            ans.set(nums[i], false);
+        
+        // Use a HashSet to store unique elements
+        Set<Integer> set = new HashSet<>();
+        for (int num : nums) {
+            set.add(num);
         }
-        for (int i = 0; i < ans.size(); i++) {
-            System.out.println(ans.get(i));
-        }
-        int total = 0;
-        int count = 0;
-        for (int i = 0; i < ans.size(); i++) {
-            if (ans.get(i) == false) {
-                count = count + 1;
+        
+        int longestStreak = 0;
+    
+        for (int num : nums) {
+            // Check if it's the start of a sequence
+            if (!set.contains(num - 1)) {
+                int currentNum = num;
+                int currentStreak = 1;
+    
+                while (set.contains(currentNum + 1)) {
+                    currentNum++;
+                    currentStreak++;
+                }
+    
+                longestStreak = Math.max(longestStreak, currentStreak);
             }
-            if (i == ans.size() - 1 || ans.get(i) == true) {
-                total = Math.max(count, total);
-                count = 0;
-            }
         }
-        return total;
+    
+        return longestStreak;
     }
+    
 }
