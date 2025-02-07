@@ -1,6 +1,7 @@
 package NeetCode.Array_Hashing;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -10,9 +11,11 @@ import java.util.PriorityQueue;
 
 public class TopKFreq {
     public static void main(String[] args) {
-        
+        int[] nums={4,5,4,6,6,6,6,4,25,16};
+        int[] ans = topKFrequent(nums,2);
+        System.out.println(Arrays.toString(ans));
     }
-    public int[] topKFrequent(int[] nums, int k) {
+    public static int[] topKFrequent(int[] nums, int k) {
         int[] ans = new int[k];
         HashMap<Integer,Integer> countMap = new HashMap<>();
         for(int num : nums){
