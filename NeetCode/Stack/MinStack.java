@@ -1,3 +1,5 @@
+package NeetCode.Stack;
+
 import java.util.Stack;
 
 class MinStack {
