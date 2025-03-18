@@ -1,4 +1,4 @@
-package NeetCode.BinarySearch;
+
 
 public class MatricsBinarySearch {
     public static void main(String[] args) {
