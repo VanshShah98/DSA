@@ -19,6 +19,7 @@ public class implementaion_of_stack_and_queues {
         queue.add(123654);
         System.out.println("Queue : " + queue);
         Deque<Integer> deque = new ArrayDeque<>();
+        System.out.println(deque);
 
     }
 }
