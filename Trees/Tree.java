@@ -132,6 +132,28 @@ public class Tree {
         Node root =  BST.buildTree(nodes);
         // System.out.println(root.data);
         // LOP(root);
-        System.out.println(Diameter(root));
+        System.out.println(diameter(root).ht);
+    }
+    static class TreeInfo{
+        int dia;
+        int ht;
+        TreeInfo(int ht, int dia){
+            this.dia=dia;
+            this.ht=ht;
+        }
+    }
+    public static TreeInfo diameter(Node root){
+        if(root==null){
+           return new TreeInfo(0,0);
+        }
+        TreeInfo left = diameter(root.left);
+        TreeInfo right = diameter(root.right);
+
+        int myHeight = Math.max(left.ht, right.ht)+1;
+        int diam1 = left.dia;
+        int diam2=right.dia;
+        int daim3 = left.ht + right.ht +1;
+        int myDia = Math.max(diam1, Math.max(diam2, daim3));
+        return new TreeInfo(myHeight, myDia);
     }
 }
