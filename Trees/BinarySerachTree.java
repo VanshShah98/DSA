@@ -1,6 +1,6 @@
 package Trees;
 
-import Recurrsion.stringrev;
+import java.util.ArrayList;
 
 public class BinarySerachTree {
     static class Node{
@@ -115,6 +115,27 @@ public class BinarySerachTree {
             Print(root.right, X, Y);
         }
     }
+    public static void printPath(ArrayList<Integer> path){
+        for(int i=0;i<path.size();i++){
+            System.out.print(path.get(i) + "->");
+        }
+        System.out.print("null");
+        System.out.println();
+    }
+    public static void noPath(Node root , ArrayList<Integer> path){
+        if(root==null){
+            return;
+        }
+        path.add(root.data);
+        if(root.left==null && root.right==null){
+            printPath(path);
+        }
+        else{
+            noPath(root.left, path);
+            noPath(root.right, path);
+        }
+        path.remove(path.size()-1);
+    }
     public static void main(String[] args) {
         int [] values = {5,1,3,4,7,2,10,8,6,9,24,30};
         Node root = null;
@@ -124,6 +145,6 @@ public class BinarySerachTree {
         }
         inOrder(root);
         System.out.println();
-        Print(root, 6, 10);
+        noPath(root,new ArrayList<>());
     }
 }
