@@ -34,9 +34,7 @@ public class ValidBST {
         }
 
         public static void main(String[] args) {
-            // ValidBST validator = new ValidBST();
 
-            // Test Case 1: Valid BST
             TreeNode root1 = new TreeNode(2);
             root1.left = new TreeNode(1);
             root1.right = new TreeNode(3);
